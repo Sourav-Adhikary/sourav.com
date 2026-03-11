@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sourav Adhikary | Tech Educator</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent-blue: #38bdf8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(30, 58, 138, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.2) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 8%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent-blue); }
+
+        /* MENU BUTTON FIXED */
+        .menu-btn { 
+            display: none; 
+            font-size: 2rem; 
+            cursor: pointer; 
+            color: var(--accent-blue); 
+            z-index: 2000; /* মেনু প্যানেলের উপরে থাকবে */
+            position: relative;
+            transition: 0.3s;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; line-height: 1.1; }
+        .hero span { color: var(--accent-blue); }
+        .hero p { margin: 1.5rem 0; color: var(--text-dim); font-size: 1.25rem; max-width: 600px; }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            background: var(--accent-blue);
+            border-radius: 0.75rem;
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        /* SECTIONS */
+        section { padding: 6rem 8%; }
+        .section-title { font-size: 2.25rem; margin-bottom: 3rem; text-align: center; }
+
+        /* ABOUT */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: var(--glass-bg);
+            padding: 3rem;
+            border-radius: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 2rem;
+            object-fit: cover;
+            border: 2px solid var(--glass-border);
+        }
+
+        .about-text { flex: 1; min-width: 300px; }
+
+        /* MATERIALS */
+        #search {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            margin: 0 auto 2.5rem;
+            display: block;
+        }
+
+        .filter { display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .filter button {
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--glass-border);
+            border-radius: 0.75rem;
+            cursor: pointer;
+        }
+        .filter button.active { background: var(--accent-blue); color: #0f172a; }
+
+        .material-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+        }
+        .card:hover { border-color: var(--accent-blue); transform: translateY(-5px); }
+        .card h3 { color: var(--accent-blue); margin-bottom: 1rem; }
+        
+        .download {
+            margin-top: auto;
+            text-align: center;
+            padding: 0.7rem;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            border: 1px solid var(--glass-border);
+        }
+
+        footer { text-align: center; padding: 4rem; border-top: 1px solid var(--glass-border); color: var(--text-dim); }
+
+        /* MOBILE OPTIMIZATION */
+        @media(max-width: 768px) {
+            .menu-btn { display: block; }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%; /* স্ক্রিনের ৮০% দখল করবে */
+                height: 100vh;
+                background: #0f172a;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: 0.5s ease-in-out;
+                z-index: 1500; /* মেনু বাটনের নিচে থাকবে */
+                box-shadow: -15px 0 40px rgba(0,0,0,0.7);
+            }
+
+            .nav-links.show { right: 0; }
+            
+            section { padding: 4rem 5%; }
+            .about-content { padding: 2rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="#" class="logo">SOURAV ADHIKARY</a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#materials">Materials</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="menu-btn" id="menuBtn" onclick="toggleMenu()">☰</div>
+</nav>
+
+<section id="home" class="hero">
+    <h1>Empowering Your <br><span>Future with Tech</span></h1>
+    <p>Premium resources for Excel, Python, and Web Development.</p>
+    <a href="#materials" class="btn">Start Learning</a>
+</section>
+
+<section id="about">
+    <h2 class="section-title">About Your Instructor</h2>
+    <div class="about-content">
+        <img src="https://i.ibb.co/601krSWf/IMG-20260311-WA0014.jpg" alt="Sourav" class="profile-img">
+        <div class="about-text">
+            <p>I am <b>Sourav Adhikary</b>, a computer educator and data enthusiast. I help students bridge the gap between theory and real-world application.</p>
+            <br>
+            <p>Specialized in: <b>Python, SQL, Excel Dashboards & Modern Web Stack.</b></p>
+        </div>
+    </div>
+</section>
+
+<section id="materials">
+    <h2 class="section-title">Learning Hub</h2>
+    <input type="text" id="search" placeholder="Search for materials...">
+
+    <div class="filter">
+        <button class="active" onclick="filterMaterial('all', event)">Everything</button>
+        <button onclick="filterMaterial('excel', event)">Excel</button>
+        <button onclick="filterMaterial('python', event)">Python</button>
+        <button onclick="filterMaterial('web', event)">Web Dev</button>
+    </div>
+
+    <div class="material-container">
+        <div class="card excel">
+            <h3>Advanced Excel</h3>
+            <p>Master VLOOKUP, INDEX-MATCH, and Array formulas.</p>
+            <a href="#" class="download">Download</a>
+        </div>
+        <div class="card python">
+            <h3>Python Basic</h3>
+            <p>A comprehensive guide for beginners.</p>
+            <a href="#" class="download">Download</a>
+        </div>
+        <div class="card web">
+            <h3>CSS Grid</h3>
+            <p>Learn responsive layouts with modern CSS.</p>
+            <a href="#" class="download">Download</a>
+        </div>
+    </div>
+</section>
+
+<footer id="contact">
+    <p>© 2026 Sourav Adhikary. All Rights Reserved.</p>
+</footer>
+
+<script>
+    const navLinks = document.getElementById("navLinks");
+    const menuBtn = document.getElementById("menuBtn");
+
+    // ১. মেনু খোলা এবং বন্ধ করা (আইকন পরিবর্তন সহ)
+    function toggleMenu() {
+        navLinks.classList.toggle("show");
+        
+        // মেনু খোলা থাকলে 'X' দেখাবে, বন্ধ থাকলে '☰'
+        if (navLinks.classList.contains("show")) {
+            menuBtn.innerHTML = "✕";
+            menuBtn.style.color = "#38bdf8"; 
+        } else {
+            menuBtn.innerHTML = "☰";
+            menuBtn.style.color = "#38bdf8";
+        }
+    }
+
+    // ২. লিঙ্কে ক্লিক করলে মেনু অটো বন্ধ হওয়া
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove("show");
+            menuBtn.innerHTML = "☰";
+        });
+    });
+
+    // ৩. ফিল্টার লজিক
+    function filterMaterial(category, event) {
+        document.querySelectorAll(".filter button").forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        const cards = document.querySelectorAll(".card");
+        cards.forEach(card => {
+            if (category === 'all' || card.classList.contains(category)) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    // ৪. সার্চ লজিক
+    document.getElementById("search").addEventListener("input", function(e) {
+        const query = e.target.value.toLowerCase();
+        const cards = document.querySelectorAll(".card");
+        
+        cards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            if (title.includes(query)) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
